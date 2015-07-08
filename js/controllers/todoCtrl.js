@@ -10,14 +10,12 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	var url = 'https://vecho.firebaseio.com/echo';
 	var echoRef = new Firebase(url);
 
-  var maxEcho = 10000000000; // enough to put me in the #1 position!
-
 	// Bind the todos to the firebase provider.
 	//$scope.todos = $firebaseArray(fireRef);
 
 //  echoRef.child("echo").setWithPriority( maxEcho, -maxEcho );
 
-	var query = echoRef.orderByChild("echo").limitToFirst(25);
+	var query = echoRef.orderByChild("order").limitToFirst(25);
   //var query = echoRef.orderByPriority().limitToFirst(25);
 
 	$scope.todos = $firebaseArray(query);
@@ -77,7 +75,8 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 			completed: false,
 			timestamp: new Date().getTime(),
 			tags: "...",
-			echo: 0
+			echo: 0,
+			order: 0
 		});
 		$scope.newTodo = '';
 	};
@@ -89,7 +88,9 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 
 	$scope.addEcho = function (todo) {
 		$scope.editedTodo = todo;
-		todo.echo = todo.echo+1;
+		todo.echo = todo.echo + 1;
+		// Hack to order using this order.
+		todo.order = todo.order -1;
 		$scope.todos.$save(todo);
 	};
 
