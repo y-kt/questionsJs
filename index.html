@@ -2,7 +2,7 @@
 <html lang="en" ng-app="todomvc" data-framework="firebase">
 	<head>
 		<meta charset="utf-8">
-		<title>Let's Echo</title>
+		<title>Ask Questions!</title>
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -12,11 +12,14 @@
 
 	</head>
 	<body ng-controller="TodoCtrl">
-		  <font size="10">Echo Now</font>&nbsp;
+		  <font size="10">Questions?</font>&nbsp;
+
 		  <a ng-class="{selected: location.path() == '/'}" class="btn btn-default" href="#/">Main</a>
+			<!--
 		  <a ng-class="{selected: location.path() == '/newechos'}" class="btn btn-primary" href="#/newechos">New Echos</a>
 	    <a ng-class="{selected: location.path() == '/tags'}" class="btn btn-success" href="#/tags">Tags</a>
 			<a ng-class="{selected: location.path() == '/users'}" class="btn btn-info" href="#/users">Users</a>
+		-->
       <a ng-class="{selected: location.path() == '/about'}" class="btn btn-warning" href="#/about">About</a>
 
         <div class="input-group">
@@ -26,7 +29,7 @@
           <textarea type="text" id="new-todo" class="form-control"
 					placeholder="What would you say? [Title CR Description]" ng-model="newTodo" autofocus></textarea>
           <span class="input-group-btn">
-          <button class="btn btn-default" type="button" ng-click="addTodo()">Post</button>
+          <button class="btn btn-default" type="button" ng-click="addTodo()">Ask</button>
          </span>
       </div><!-- /input-group -->
 
@@ -40,7 +43,7 @@
             <p class="list-group-item-text"><span ng-bind-html="todo.trustedDesc"></span> created: {{todo.dateString}}
 						<span ng-show="todo.tags">tags: {{todo.tags}}</span></p>
 
-						<button  class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)">Echo</button>
+						<button  class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)">Like</button>
 						<button  class="btn btn-default btn-xs glyphicon glyphicon-check" ng-click="toggleCompleted(todo)">Toggle Completed</button>
 						&nbsp;
 						<button class="btn btn-default btn-xs glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeTodo(todo)">Del</button>
