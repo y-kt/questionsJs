@@ -6,14 +6,20 @@
  * - retrieves and persists the model via the $firebaseArray service
  * - exposes the model to the template and provides event handlers
  */
-todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray) {
+todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce) {
 	var url = 'https://vecho.firebaseio.com/echo';
-	var fireRef = new Firebase(url);
+	var echoRef = new Firebase(url);
+
+  var maxEcho = 10000000000; // enough to put me in the #1 position!
 
 	// Bind the todos to the firebase provider.
 	//$scope.todos = $firebaseArray(fireRef);
 
-	var query = fireRef.orderByChild("echo").limitToFirst(25);
+//  echoRef.child("echo").setWithPriority( maxEcho, -maxEcho );
+
+	var query = echoRef.orderByChild("echo").limitToFirst(25);
+  //var query = echoRef.orderByPriority().limitToFirst(25);
+
 	$scope.todos = $firebaseArray(query);
 
 	$scope.newTodo = '';
@@ -32,6 +38,12 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 			if (todo.completed === false) {
 				remaining++;
 			}
+
+			// set time
+			todo.dateString = new Date(todo.timestamp).toString();
+			todo.tags = todo.wholeMsg.match(/#\w+/g);
+
+			 todo.trustedDesc = $sce.trustAsHtml(todo.linkedDesc);
 		});
 		$scope.totalCount = total;
 		$scope.remainingCount = remaining;
@@ -50,6 +62,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		var head = newTodo;
 		var desc = "";
 
+
 		var firstCRPos = newTodo.indexOf('\n');
 		if (firstCRPos != -1) {
 			head = newTodo.slice(0, firstCRPos);
@@ -60,7 +73,10 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 			wholeMsg: newTodo,
 			head: head,
 			desc: desc,
+			linkedDesc: Autolinker.link(desc, {newWindow: false, stripPrefix: false}),
 			completed: false,
+			timestamp: new Date().getTime(),
+			tags: "...",
 			echo: 0
 		});
 		$scope.newTodo = '';
@@ -102,6 +118,11 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 				$scope.removeTodo(todo);
 			}
 		});
+	};
+
+	$scope.toggleCompleted = function (todo) {
+			todo.completed = !todo.completed;
+			$scope.todos.$save(todo);
 	};
 
 	$scope.markAll = function (allCompleted) {
