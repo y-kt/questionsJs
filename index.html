@@ -20,7 +20,8 @@
 					<!--
 					<form id="todo-form" ng-submit="addTodo()">
 					-->
-          <textarea type="text" id="new-todo" class="form-control" placeholder="What would you say?" ng-model="newTodo" autofocus></textarea>
+          <textarea type="text" id="new-todo" class="form-control"
+					placeholder="What would you say? [Title CR Description]" ng-model="newTodo" autofocus></textarea>
           <span class="input-group-btn">
           <button class="btn btn-default" type="button" ng-click="addTodo()">Post</button>
          </span>
@@ -35,8 +36,8 @@ menu
 							-->
 				<div class="list-group" id="todo-list">
 					<a href="#" class="list-group-item" ng-repeat="(id, todo) in todos | todoFilter" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
-						<h4 class="list-group-item-heading"><span class="badge">{{todo.echo}}</span> {{todo.title}}</h4>
-            <p class="list-group-item-text">... </p>
+						<h4 class="list-group-item-heading"><span class="badge">{{todo.echo}}</span> {{todo.head}}</h4>
+            <p class="list-group-item-text">{{todo.desc}}</p>
 
 						<button type="button" class="btn btn-default btn-xs" ng-click="addEcho(todo)">
 						<span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> Echo

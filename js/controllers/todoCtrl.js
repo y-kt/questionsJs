@@ -7,7 +7,7 @@
  * - exposes the model to the template and provides event handlers
  */
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray) {
-	var url = 'https://vecho.firebaseio.com/';
+	var url = 'https://vecho.firebaseio.com/echo';
 	var fireRef = new Firebase(url);
 
 	// Bind the todos to the firebase provider.
@@ -24,7 +24,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		var remaining = 0;
 		$scope.todos.forEach(function (todo) {
 			// Skip invalid entries so they don't break the entire app.
-			if (!todo || !todo.title) {
+			if (!todo || !todo.head) {
 				return;
 			}
 
@@ -41,11 +41,25 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 
 	$scope.addTodo = function () {
 		var newTodo = $scope.newTodo.trim();
+
+		// No input, so just do nothing
 		if (!newTodo.length) {
 			return;
 		}
+
+		var head = newTodo;
+		var desc = "";
+
+		var firstCRPos = newTodo.indexOf('\n');
+		if (firstCRPos != -1) {
+			head = newTodo.slice(0, firstCRPos);
+			desc = newTodo.slice(firstCRPos);
+		}
+
 		$scope.todos.$add({
-			title: newTodo,
+			wholeMsg: newTodo,
+			head: head,
+			desc: desc,
 			completed: false,
 			echo: 0
 		});
@@ -65,8 +79,8 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 
 	$scope.doneEditing = function (todo) {
 		$scope.editedTodo = null;
-		var title = todo.title.trim();
-		if (title) {
+		var wholeMsg = todo.wholeMsg.trim();
+		if (wholeMsg) {
 			$scope.todos.$save(todo);
 		} else {
 			$scope.removeTodo(todo);
@@ -74,7 +88,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	};
 
 	$scope.revertEditing = function (todo) {
-		todo.title = $scope.originalTodo.title;
+		todo.wholeMsg = $scope.originalTodo.wholeMsg;
 		$scope.doneEditing(todo);
 	};
 
