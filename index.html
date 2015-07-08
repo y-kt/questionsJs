@@ -30,13 +30,7 @@
          </span>
       </div><!-- /input-group -->
 
-<!--
-menu
--->
 
-								<!--
-                 <span class="label label-danger">Danger</span>
-							-->
 				<div class="list-group" id="todo-list">
 					<span class="list-group-item" ng-repeat="(id, todo) in todos | todoFilter" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
 						<h4 class="list-group-item-heading">
@@ -53,38 +47,6 @@ menu
 					</span>
 				</div>
 
-
-		<!--
-			<footer id="footer" ng-show="totalCount" ng-cloak>
-				<span id="todo-count"><strong>{{remainingCount}}</strong>
-					<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
-				</span>
-				<ul id="filters">
-					<li>
-						<a ng-class="{selected: location.path() == '/'} " href="#/">All</a>
-					</li>
-					<li>
-						<a ng-class="{selected: location.path() == '/active'}" href="#/active">Active</a>
-					</li>
-					<li>
-						<a ng-class="{selected: location.path() == '/completed'}" href="#/completed">Completed</a>
-					</li>
-				</ul>
-				<button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
-			</footer>
-		</section>
-		<footer id="info">
-			<p>Double-click to edit a todo</p>
-			<p>Credits:
-				<a href="http://twitter.com/cburgdorf">Christoph Burgdorf</a>,
-				<a href="http://ericbidelman.com">Eric Bidelman</a>,
-				<a href="http://twitter.com/_davideast">David East</a>,
-				<a href="http://jacobmumm.com">Jacob Mumm</a> and
-				<a href="http://igorminar.com">Igor Minar</a>
-			</p>
-			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-		</footer>
-	-->
 
 	<!-- Autolink from https://github.com/gregjacobs/Autolinker.js> -->
 	  <script src="js/autolink/Autolinker.js"></script>
