@@ -7,9 +7,9 @@
  * - exposes the model to the template and provides event handlers
  */
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce, $localStorage) {
-
   // set local storage
   $scope.$storage = $localStorage;
+	$scope.maxQuestion = 10;
 
   var splits = $location.path().trim().split("/");
 	var roomId = angular.lowercase(splits[1]);
@@ -30,7 +30,6 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	var query = echoRef.orderByChild("order");
 	//.limitToFirst(25);
   $scope.todos = $firebaseArray(query);
-
 	$scope.newTodo = '';
 	$scope.editedTodo = null;
 
@@ -169,6 +168,10 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		ref.unauth();
         delete $scope.$authData;
 			  $scope.isAdmin = false;
+	};
+
+	$scope.increaseMax = function () {
+			$scope.maxQuestion+=10;
 	};
 
 	if ($location.path() === '') {
