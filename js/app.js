@@ -7,7 +7,7 @@
  *
  * @type {angular.Module}
  */
-var todomvc = angular.module('todomvc', ['firebase']);
+var todomvc = angular.module('todomvc', ['firebase', 'ngStorage']);
 
 todomvc.filter('todoFilter', function ($location) {
 	return function (input) {

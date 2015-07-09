@@ -6,12 +6,18 @@
  * - retrieves and persists the model via the $firebaseArray service
  * - exposes the model to the template and provides event handlers
  */
-todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce) {
+todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce, $localStorage) {
 
-	var firstPath = $location.path().split("//", 1)[0];
+  // set local storage
+	$localStorage["admin"] = "yes";
+  $scope.$storage = $localStorage
+
+  var splits = $location.path().trim().split("/");
+	var firstPath = splits[1];
 	if (!firstPath || firstPath.length == 0) {
 		firstPath = "all";
 	}
+	$scope.firstPath = firstPath;
 
 	var url = "https://classquestion.firebaseio.com/questions/" + firstPath;
 	var echoRef = new Firebase(url);
@@ -98,6 +104,9 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		// Hack to order using this order.
 		todo.order = todo.order -1;
 		$scope.todos.$save(todo);
+
+    // Disable the button
+		$scope.$storage[todo.$id] = "echoed";
 	};
 
 	$scope.doneEditing = function (todo) {
