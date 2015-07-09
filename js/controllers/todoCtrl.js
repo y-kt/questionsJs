@@ -9,14 +9,14 @@
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce, $localStorage) {
 
   // set local storage
-	$localStorage["admin"] = "yes";
   $scope.$storage = $localStorage;
 
   var splits = $location.path().trim().split("/");
-	var roomId = splits[1];
+	var roomId = angular.lowercase(splits[1]);
 	if (!roomId || roomId.length == 0) {
 		roomId = "all";
 	}
+
 	$scope.roomId = roomId;
 
 	var url = "https://classquestion.firebaseio.com/" + roomId + "/questions/";
