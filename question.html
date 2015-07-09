@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="todomvc" data-framework="firebase">
+<html lang="en" ng-app="todomvc" scroll data-framework="firebase">
 	<head>
 		<meta charset="utf-8">
 
@@ -72,7 +72,7 @@
 					</span>
 				</div>
 
-				<button ng-show="totalCount>=maxQuestion" class="pull-right btn btn-default glyphicon glyphicon-arrow-down" type="button" ng-click="increaseMax()"> Show more</button>
+				<button ng-hide="totalCount<=maxQuestion" class="pull-right btn btn-default glyphicon glyphicon-arrow-down" type="button" ng-click="increaseMax()"> Show more</button>
 
 
 

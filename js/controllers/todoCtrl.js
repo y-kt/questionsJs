@@ -6,10 +6,24 @@
  * - retrieves and persists the model via the $firebaseArray service
  * - exposes the model to the template and provides event handlers
  */
-todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce, $localStorage) {
+todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce, $localStorage, $window) {
   // set local storage
   $scope.$storage = $localStorage;
-	$scope.maxQuestion = 10;
+
+	var scrollCountDelta = 10;
+	$scope.maxQuestion = scrollCountDelta;
+
+  // autoscroll
+	angular.element($window).bind("scroll", function() {
+			if ($window.innerHeight + $window.scrollY >= $window.document.body.offsetHeight) {
+					console.log('Hit the bottom2. innerHeight' +
+						$window.innerHeight + "scrollY" +
+						$window.scrollY + "offsetHeight" + $window.document.body.offsetHeight);
+
+					$scope.increaseMax();
+					$scope.$apply();
+			}
+		});
 
   var splits = $location.path().trim().split("/");
 	var roomId = angular.lowercase(splits[1]);
@@ -171,7 +185,9 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	};
 
 	$scope.increaseMax = function () {
-			$scope.maxQuestion+=10;
+		if ($scope.maxQuestion < $scope.totalCount) {
+			   $scope.maxQuestion+=scrollCountDelta;
+		}
 	};
 
 	if ($location.path() === '') {

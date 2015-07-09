@@ -28,3 +28,24 @@ todomvc.filter('todoFilter', function ($location) {
 		return newQuestions.concat(sorted);
 	};
 });
+
+// http://stackoverflow.com/questions/9439725/javascript-how-to-detect-if-browser-window-is-scrolled-to-bottom
+// http://jsfiddle.net/88TzF/
+/*
+todomvc.directive("scroll", function ($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+             if ($window.innerHeight + $window.scrollY >= $window.document.body.offsetHeight) {
+                 scope.boolChangeClass = true;
+                 console.log('Hit the bottom.');
+								 $scope.increaseMax();
+								 scope.$apply();
+             } else {
+                 scope.boolChangeClass = false;
+                 console.log('Header is in view.');
+             }
+
+        });
+    };
+});
+*/
