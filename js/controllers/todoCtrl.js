@@ -10,16 +10,16 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 
   // set local storage
 	$localStorage["admin"] = "yes";
-  $scope.$storage = $localStorage
+  $scope.$storage = $localStorage;
 
   var splits = $location.path().trim().split("/");
-	var firstPath = splits[1];
-	if (!firstPath || firstPath.length == 0) {
-		firstPath = "all";
+	var roomId = splits[1];
+	if (!roomId || roomId.length == 0) {
+		roomId = "all";
 	}
-	$scope.firstPath = firstPath;
+	$scope.roomId = roomId;
 
-	var url = "https://classquestion.firebaseio.com/questions/" + firstPath;
+	var url = "https://classquestion.firebaseio.com/" + roomId + "/questions/";
 	var echoRef = new Firebase(url);
 
 	// Bind the todos to the firebase provider.
@@ -59,6 +59,7 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		$scope.remainingCount = remaining;
 		$scope.completedCount = total - remaining;
 		$scope.allChecked = remaining === 0;
+		$scope.absurl = $location.absUrl();
 	}, true);
 
 	$scope.addTodo = function () {
@@ -154,9 +155,20 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
         if (error) {
              console.log("Login Failed!", error);
         } else {
-           console.log("Authenticated successfully with payload:", authData);
+					$scope.$apply(function() {
+                 	$scope.$authData = authData;
+									$scope.isAdmin = true;
+          });
+					console.log("Authenticated successfully with payload:", authData);
        }
     });
+	};
+
+	$scope.FBLogout = function () {
+		var ref = new Firebase("https://classquestion.firebaseio.com");
+		ref.unauth();
+        delete $scope.$authData;
+			  $scope.isAdmin = false;
 	};
 
 	if ($location.path() === '') {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Cover Template for Bootstrap</title>
+    <title>Questions!</title>
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
@@ -20,7 +20,7 @@
 
   </head>
 
-  <body>
+  <body ng-controller="controller">
 
     <div class="site-wrapper">
 
@@ -43,13 +43,29 @@
 
           <div class="inner cover">
             <h1 class="cover-heading">Ask More Questions!</h1>
-            <p class="lead">This totally anonymous and realtime update question moderate system permit students ask more questions in a typical class setting.</p>
-
-						<p class="lead">Simply create a question room using a simple room name (such as comp3111). That's it! You will see how to use in a sec.</p>
-
+            <p class="lead">This totally anonymous and realtime updating question moderate system permits students ask more questions in a typical class setting.
+							Simply join a question room using a simple name (such as comp3111).</p>
             <p class="lead">
-              <a href="#" class="btn btn-lg btn-default">Create</a>
-            </p>
+							 <form name="form" class="navbar-form navbar-left" role="search">
+							<input type="text" name = "input" class="form-control large"
+							   ng-model="example.text"
+                 ng-pattern="example.word" required
+								 ng-trim="false"
+								 autofocus
+					       placeholder="Room name">
+              <a href="#" class="btn btn-lg btn-default"
+							ng-disabled="form.input.$error.required || form.input.$error.pattern"
+							ng-click="join()"
+							>Join</a>
+						</form>
+					</p>
+
+				   <div class="alert alert-warning" role="alert" ng-show="form.input.$error.required">
+		           Room name is required!</div>
+							  <div class="alert alert-warning" role="alert" ng-show="form.input.$error.pattern">
+		          Room name must be a single English word!
+		       </div>
+
           </div>
 
           <div class="mastfoot">
@@ -69,5 +85,22 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+		<script src="node_modules/angular/angular.js"></script>
+
+		<script>
+     angular.module('app', [])
+       .controller('controller', ['$scope', '$location', '$window', function($scope, $location, $window) {
+      $scope.example = {
+        text: '',
+        word: /^\s*\w*\s*$/
+      };
+
+			$scope.join = function () {
+				  $window.location.href = '/question.html#/' + $scope.example.text;
+			}
+    }]);
+</script>
+
   </body>
 </html>

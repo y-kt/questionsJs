@@ -2,6 +2,14 @@
 <html lang="en" ng-app="todomvc" data-framework="firebase">
 	<head>
 		<meta charset="utf-8">
+
+	 <!-- http://stackoverflow.com/questions/1341089/using-meta-tags-to-turn-off-caching-in-all-browsers -->
+	 <meta http-equiv="cache-control" content="max-age=0" />
+   <meta http-equiv="cache-control" content="no-cache" />
+   <meta http-equiv="expires" content="0" />
+   <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+   <meta http-equiv="pragma" content="no-cache" />
+
 		<title>Ask Questions!</title>
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -12,17 +20,25 @@
 
 	</head>
 	<body ng-controller="TodoCtrl">
-		  <font size="10">Questions for {{firstPath}} {{$storage["admin"]}}?</font>&nbsp;
+		  <font size="10">Questions for {{roomId}}?</font>&nbsp;
 
+<!--
 		  <a ng-class="{selected: location.path() == '/'}" class="btn btn-default" href="#/">Main</a>
-			<!--
+
 		  <a ng-class="{selected: location.path() == '/newechos'}" class="btn btn-primary" href="#/newechos">New Echos</a>
 	    <a ng-class="{selected: location.path() == '/tags'}" class="btn btn-success" href="#/tags">Tags</a>
 			<a ng-class="{selected: location.path() == '/users'}" class="btn btn-info" href="#/users">Users</a>
-		-->
-      <a ng-class="{selected: location.path() == '/about'}" class="btn btn-warning" href="#/about">About</a>
+		  <a ng-class="{selected: location.path() == '/about'}" class="btn btn-warning" href="#/about">About</a>
+			-->
 
-			<button class="btn btn-default" type="button" ng-click="FBLogin()">Login</button>
+      Share this room url: {{absurl}}
+			<button ng-hide="$authData" class="btn btn-primary left" type="button" ng-click="FBLogin()">Want Admin? Sign in with Facebook</button>
+
+			<!-- after login -->
+			<img ng-show="$authData" src="https://graph.facebook.com/{{$authData.facebook.id}}/picture/?type=square&return_ssl_resources=1" alt="{{name}}" />
+			<button ng-show="$authData" class="btn btn-primary left" type="button" ng-click="FBLogout()">Logout</button>
+
+
 
         <div class="input-group">
 					<!--
@@ -45,10 +61,10 @@
             <p class="list-group-item-text"><span ng-bind-html="todo.trustedDesc"></span> created: {{todo.dateString}}
 						<span ng-show="todo.tags">tags: {{todo.tags}}</span></p>
 
-						<button  class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)" ng-disabled="$storage[todo.$id]">Like</button>
-						<button  class="btn btn-default btn-xs glyphicon glyphicon-check" ng-click="toggleCompleted(todo)">Toggle Completed</button>
+						<button class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)" ng-disabled="$storage[todo.$id]">Like</button>
+						<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon-check" ng-click="toggleCompleted(todo)">Toggle Completed</button>
 						&nbsp;
-						<button class="btn btn-default btn-xs glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeTodo(todo)">Del</button>
+						<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeTodo(todo)">Del</button>
 					</span>
 				</div>
 
