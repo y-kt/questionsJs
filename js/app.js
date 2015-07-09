@@ -11,21 +11,16 @@ var todomvc = angular.module('todomvc', ['firebase', 'ngStorage']);
 
 todomvc.filter('todoFilter', function ($location) {
 	return function (input) {
-		var filtered = {};
-		angular.forEach(input, function (todo, id) {
-			var path = $location.path();
-			if (path === '/active') {
-				if (!todo.completed) {
-					filtered[id] = todo;
-				}
-			} else if (path === '/completed') {
-				if (todo.completed) {
-					filtered[id] = todo;
-				}
-			} else {
-				filtered[id] = todo;
-			}
+		var sorted = [];
+		var newQuestions = [];
+		angular.forEach(input, function (todo) {
+				if (todo.timestamp > new Date().getTime() - 180000) {
+					todo.new = true;
+					newQuestions.push(todo);
+				} else {
+				   sorted.push(todo);
+        }
 		});
-		return filtered;
+		return newQuestions.concat(sorted);
 	};
 });

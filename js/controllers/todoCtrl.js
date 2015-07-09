@@ -25,12 +25,11 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	// Bind the todos to the firebase provider.
 	//$scope.todos = $firebaseArray(fireRef);
 
-//  echoRef.child("echo").setWithPriority( maxEcho, -maxEcho );
+  // echoRef.child("echo").setWithPriority( maxEcho, -maxEcho );
 
-	var query = echoRef.orderByChild("order").limitToFirst(25);
-  //var query = echoRef.orderByPriority().limitToFirst(25);
-
-	$scope.todos = $firebaseArray(query);
+	var query = echoRef.orderByChild("order");
+	//.limitToFirst(25);
+  $scope.todos = $firebaseArray(query);
 
 	$scope.newTodo = '';
 	$scope.editedTodo = null;
@@ -53,8 +52,9 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 			todo.dateString = new Date(todo.timestamp).toString();
 			todo.tags = todo.wholeMsg.match(/#\w+/g);
 
-			 todo.trustedDesc = $sce.trustAsHtml(todo.linkedDesc);
+			todo.trustedDesc = $sce.trustAsHtml(todo.linkedDesc);
 		});
+
 		$scope.totalCount = total;
 		$scope.remainingCount = remaining;
 		$scope.completedCount = total - remaining;
