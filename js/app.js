@@ -24,6 +24,14 @@ todomvc.filter('todoFilter', function ($location) {
 					todo.new = false;
 				  sorted.push(todo);
         }
+
+				// sorting new
+				newQuestions.sort(function(a, b) {
+					if (a.echo == b.echo) {
+						return b.timestamp - a.timestamp;
+					}
+					return b.echo - a.echo
+				});
 		});
 		return newQuestions.concat(sorted);
 	};
