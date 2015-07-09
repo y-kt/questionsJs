@@ -45,7 +45,7 @@
             <h1 class="cover-heading">Ask More Questions!</h1>
             <p class="lead">This totally anonymous and realtime updating question moderate system permits students ask more questions in a typical class setting.
 							Simply join a question room using a simple name (such as comp3111).</p>
-            <p class="lead">
+            <p class="lead" class="col-md-2 col-md-offset-5">
 							 <form name="form" class="navbar-form navbar-left" role="search">
 							<input type="text" name = "input" class="form-control large"
 							   ng-model="example.text"
@@ -54,7 +54,7 @@
 								 autofocus
 					       placeholder="Room name">
               <a href="#" class="btn btn-lg btn-default"
-							ng-disabled="form.input.$error.required || form.input.$error.pattern"
+							ng-hide="form.input.$error.required || form.input.$error.pattern"
 							ng-click="join()"
 							>Join</a>
 						</form>

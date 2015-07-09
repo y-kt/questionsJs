@@ -28,7 +28,6 @@
 		  <font size="10">Questions for {{roomId}}?</font>&nbsp;
 
 <!--
-		  <a ng-class="{selected: location.path() == '/'}" class="btn btn-default" href="#/">Main</a>
 
 		  <a ng-class="{selected: location.path() == '/newechos'}" class="btn btn-primary" href="#/newechos">New Echos</a>
 	    <a ng-class="{selected: location.path() == '/tags'}" class="btn btn-success" href="#/tags">Tags</a>
@@ -36,7 +35,8 @@
 		  <a ng-class="{selected: location.path() == '/about'}" class="btn btn-warning" href="#/about">About</a>
 			-->
 
-      Share this room url: {{absurl}}
+      <small>Share room url: {{absurl}}</small> &nbsp;
+			<a class="btn btn-default" href="/index.html">Main</a>
 			<button ng-hide="$authData" class="btn btn-primary left" type="button" ng-click="FBLogin()">Want Admin? Sign in with Facebook</button>
 
 			<!-- after login -->
