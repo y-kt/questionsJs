@@ -6,25 +6,24 @@
  * - retrieves and persists the model via the $firebaseArray service
  * - exposes the model to the template and provides event handlers
  */
-todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce, $localStorage, $window) {
+todomvc.controller('TodoCtrl',
+    ['$scope', '$location', '$firebaseArray', '$sce', '$localStorage', '$window',
+			 function TodoCtrl($scope, $location, $firebaseArray, $sce, $localStorage, $window) {
   // set local storage
   $scope.$storage = $localStorage;
 
 	var scrollCountDelta = 10;
 	$scope.maxQuestion = scrollCountDelta;
 
-  // autoscroll
-	angular.element($window).bind("scroll", function() {
-			if ($window.innerHeight + $window.scrollY >= $window.document.body.offsetHeight) {
-					console.log('Hit the bottom2. innerHeight' +
-						$window.innerHeight + "scrollY" +
-						$window.scrollY + "offsetHeight" + $window.document.body.offsetHeight);
-
-					$scope.increaseMax();
-					$scope.$apply();
-			}
-		});
-
+/*
+	$(window).scroll(function(){
+		if($(window).scrollTop() > 0) {
+			$("#btn_top").show();
+		} else {
+			$("#btn_top").hide();
+		}
+	});
+*/
   var splits = $location.path().trim().split("/");
 	var roomId = angular.lowercase(splits[1]);
 	if (!roomId || roomId.length == 0) {
@@ -32,22 +31,18 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 	}
 
 	$scope.roomId = roomId;
-
 	var url = "https://classquestion.firebaseio.com/" + roomId + "/questions/";
 	var echoRef = new Firebase(url);
 
-	// Bind the todos to the firebase provider.
-	//$scope.todos = $firebaseArray(fireRef);
-
-  // echoRef.child("echo").setWithPriority( maxEcho, -maxEcho );
-
 	var query = echoRef.orderByChild("order");
-	//.limitToFirst(25);
+	// Should we limit?
+	//.limitToFirst(1000);
   $scope.todos = $firebaseArray(query);
-	$scope.newTodo = '';
+
+	//$scope.input.wholeMsg = '';
 	$scope.editedTodo = null;
 
-	$scope.$watch('todos', function () {
+	$scope.$watchCollection('todos', function () {
 		var total = 0;
 		var remaining = 0;
 		$scope.todos.forEach(function (todo) {
@@ -75,23 +70,39 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		$scope.absurl = $location.absUrl();
 	}, true);
 
+  // Get the first sentence and rest
+  $scope.getFirstAndRestSentence = function($string) {
+		var head = $string;
+		var desc = "";
+
+		var separators = ['.', '?', '\n'];
+
+		var firstIndex = -1;
+		for (var i in separators) {
+			var index = $string.indexOf(separators[i]);
+			if (index == -1) continue;
+			if (firstIndex == -1) {firstIndex = index; continue;}
+			if (firstIndex > index) {firstIndex = index;}
+		}
+
+		if (firstIndex !=-1) {
+	      head = $string.slice(0, firstIndex+1);
+        desc = $string.slice(firstIndex+1);
+    }
+		return [head, desc];
+	}
+
 	$scope.addTodo = function () {
-		var newTodo = $scope.newTodo.trim();
+		var newTodo = $scope.input.wholeMsg.trim();
 
 		// No input, so just do nothing
 		if (!newTodo.length) {
 			return;
 		}
 
-		var head = newTodo;
-		var desc = "";
-
-
-		var firstCRPos = newTodo.indexOf('\n');
-		if (firstCRPos != -1) {
-			head = newTodo.slice(0, firstCRPos);
-			desc = newTodo.slice(firstCRPos);
-		}
+    var firstAndLast = $scope.getFirstAndRestSentence(newTodo);
+		var head = firstAndLast[0];
+		var desc = firstAndLast[1];
 
 		$scope.todos.$add({
 			wholeMsg: newTodo,
@@ -104,7 +115,8 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 			echo: 0,
 			order: 0
 		});
-		$scope.newTodo = '';
+		// remove the posted question in the input
+		$scope.input.wholeMsg = '';
 	};
 
 	$scope.editTodo = function (todo) {
@@ -190,8 +202,26 @@ todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArr
 		}
 	};
 
+$scope.toTop =function toTop(){
+	$window.scrollTo(0,0);
+}
+
+ // Not sure what is this code. Todel
 	if ($location.path() === '') {
 		$location.path('/');
 	}
 	$scope.location = $location;
-});
+
+	// autoscroll
+	angular.element($window).bind("scroll", function() {
+			if ($window.innerHeight + $window.scrollY >= $window.document.body.offsetHeight) {
+					console.log('Hit the bottom2. innerHeight' +
+						$window.innerHeight + "scrollY" +
+						$window.scrollY + "offsetHeight" + $window.document.body.offsetHeight);
+
+					$scope.increaseMax();
+					$scope.$apply();
+			}
+		});
+
+}]);
