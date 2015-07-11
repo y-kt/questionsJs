@@ -46,15 +46,19 @@ describe('TodoCtrl', function() {
         $scope: scope
       });
 
-      var results = scope.getFirstAndRestSentence("Hello? This is Sung");
-      expect(results[0]).toEqual('Hello?');
+      var testInputs = [
+        {str:"Hello? This is Sung", exp: "Hello?"},
+        {str:"Hello.co? This is Sung", exp: "Hello.co?"},
+        {str:"Hello.co This is Sung", exp: "Hello.co This is Sung"},
+        {str:"Hello.co \nThis is Sung", exp: "Hello.co \n"},
 
-      var results = scope.getFirstAndRestSentence("Hello.co? This is Sung");
-      expect(results[0]).toEqual('Hello.co?');
+        {str:"Hello?? This is Sung", exp: "Hello??"},
+      ]
 
-      var results = scope.getFirstAndRestSentence("Hello.co?? This is Sung");
-      expect(results[0]).toEqual('Hello.co??');
-
+      for (var i in testInputs) {
+        var results = scope.getFirstAndRestSentence(testInputs[i].str);
+        expect(results[0]).toEqual(testInputs[i].exp);
+      }
     });
 
     it('RoomId', function() {

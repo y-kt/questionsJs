@@ -25,7 +25,8 @@ describe('controllers 단위 테스트', function(){
 		var ctrl = $controller('MyCtrl2', {
 			$scope : scope
 		});
-		expect(scope.test2()).toBe('안녕히계세요!!');
+  //	expect(scope.test2()).toBe('안녕히계세요!!');
+    expect(scope.test2()).toBe('안녕하세요!');
 	}));
 
   it('setFirstAndRestSentence Dummy', inject(function($rootScope, $controller) {

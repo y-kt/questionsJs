@@ -20,6 +20,7 @@ module.exports = function(config) {
       'js/lib/*.js',
       'js/*.js',
       'js/**/*.js',
+
       'test/unit/*.js'
     ],
 
@@ -62,6 +63,13 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
 
+    //
+    client: {
+      captureConsole: true,
+      mocha: {
+        bail: true
+      }
+    }
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
