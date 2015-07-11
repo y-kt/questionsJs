@@ -39,6 +39,6 @@ myApp.
   					desc = $string.slice(firstIndex+1);
   			}
   			return [head, desc];
-  		}
+  		};
 
   	}]);

@@ -18,7 +18,7 @@ describe('TodoCtrl', function() {
   var sce;
   var localStorage;
   var window;
-
+ 
   // Injecting variables
   // http://stackoverflow.com/questions/13664144/how-to-unit-test-angularjs-controller-with-location-service
   beforeEach(inject(function($location,
@@ -53,7 +53,7 @@ describe('TodoCtrl', function() {
         {str:"Hello.co \nThis is Sung", exp: "Hello.co \n"},
 
         {str:"Hello?? This is Sung", exp: "Hello??"},
-      ]
+      ];
 
       for (var i in testInputs) {
         var results = scope.getFirstAndRestSentence(testInputs[i].str);

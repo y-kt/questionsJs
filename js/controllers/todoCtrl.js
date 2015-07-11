@@ -26,7 +26,7 @@ todomvc.controller('TodoCtrl',
 */
   var splits = $location.path().trim().split("/");
 	var roomId = angular.lowercase(splits[1]);
-	if (!roomId || roomId.length == 0) {
+	if (!roomId || roomId.length === 0) {
 		roomId = "all";
 	}
 
@@ -90,7 +90,7 @@ todomvc.controller('TodoCtrl',
         desc = $string.slice(firstIndex+1);
     }
 		return [head, desc];
-	}
+	};
 
 	$scope.addTodo = function () {
 		var newTodo = $scope.input.wholeMsg.trim();
@@ -203,9 +203,9 @@ todomvc.controller('TodoCtrl',
 		}
 	};
 
-$scope.toTop =function toTop(){
+ $scope.toTop =function toTop() {
 	$window.scrollTo(0,0);
-}
+ };
 
  // Not sure what is this code. Todel
 	if ($location.path() === '') {
