@@ -5,5 +5,11 @@
     "angularfire": "^1.0.0",
     "todomvc-app-css": "^1.0.1",
     "todomvc-common": "^1.0.1"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.12.37",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.6"
   }
 }

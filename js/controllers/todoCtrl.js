@@ -8,7 +8,7 @@
  */
 todomvc.controller('TodoCtrl',
     ['$scope', '$location', '$firebaseArray', '$sce', '$localStorage', '$window',
-			 function TodoCtrl($scope, $location, $firebaseArray, $sce, $localStorage, $window) {
+			 function ($scope, $location, $firebaseArray, $sce, $localStorage, $window) {
   // set local storage
   $scope.$storage = $localStorage;
 
@@ -75,7 +75,7 @@ todomvc.controller('TodoCtrl',
 		var head = $string;
 		var desc = "";
 
-		var separators = ['.', '?', '\n'];
+		var separators = [". ", "? ", "! ", '\n'];
 
 		var firstIndex = -1;
 		for (var i in separators) {
@@ -107,6 +107,7 @@ todomvc.controller('TodoCtrl',
 		$scope.todos.$add({
 			wholeMsg: newTodo,
 			head: head,
+			headLastChar: head.slice(-1),
 			desc: desc,
 			linkedDesc: Autolinker.link(desc, {newWindow: false, stripPrefix: false}),
 			completed: false,

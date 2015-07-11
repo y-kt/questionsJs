@@ -9,6 +9,35 @@
  */
 var todomvc = angular.module('todomvc', ['firebase', 'ngStorage']);
 
+// Dummy controller for testing
+todomvc.
+	controller('MyCtrl1', ['$scope', '$location', function($scope, $location) {
+		$scope.test1 = 'EFG';
+
+		// Get the first sentence and rest
+		$scope.getFirstAndRestSentence = function($string) {
+			var head = $string;
+			var desc = "";
+
+			var separators = ['.', '?', '\n'];
+
+			var firstIndex = -1;
+			for (var i in separators) {
+				var index = $string.indexOf(separators[i]);
+				if (index == -1) continue;
+				if (firstIndex == -1) {firstIndex = index; continue;}
+				if (firstIndex > index) {firstIndex = index;}
+			}
+
+			if (firstIndex !=-1) {
+					head = $string.slice(0, firstIndex+1);
+					desc = $string.slice(firstIndex+1);
+			}
+			return [head, desc];
+		}
+
+	}]);
+
 todomvc.filter('todoFilter', function ($location) {
 	return function (input, max) {
 		var sorted = [];
