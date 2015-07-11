@@ -1,44 +1,44 @@
 var myApp = angular.module('myApp.services', []).
-	value('version', '0.1');
+value('version', '0.1');
 
 myApp.
-  //view1의 컨트롤러
-	controller('MyCtrl1', ['$scope', function($scope) {
-		$scope.test1 = 'EFG';
-	}])
+//view1의 컨트롤러
+controller('MyCtrl1', ['$scope', function($scope) {
+  $scope.test1 = 'EFG';
+}])
 
-	//view2의 컨트롤러
-	.controller('MyCtrl2', ['$scope', function($scope) {
-		$scope.test2 = function() {
-			return '안녕하세요!';
-		};
-	}]);
+//view2의 컨트롤러
+.controller('MyCtrl2', ['$scope', function($scope) {
+  $scope.test2 = function() {
+    return '안녕하세요!';
+  };
+}]);
 
-  // Dummy controller for testing
-  myApp.
-  	controller('MyCtrl1', ['$scope', '$location', function($scope, $location) {
-  		$scope.test1 = 'EFG';
+// Dummy controller for testing
+myApp.
+controller('MyCtrl1', ['$scope', '$location', function($scope, $location) {
+  $scope.test1 = 'EFG';
 
-  		// Get the first sentence and rest
-  		$scope.getFirstAndRestSentence = function($string) {
-  			var head = $string;
-  			var desc = "";
+  // Get the first sentence and rest
+  $scope.getFirstAndRestSentence = function($string) {
+    var head = $string;
+    var desc = "";
 
-  			var separators = ['.', '?', '\n'];
+    var separators = ['.', '?', '\n'];
 
-  			var firstIndex = -1;
-  			for (var i in separators) {
-  				var index = $string.indexOf(separators[i]);
-  				if (index == -1) continue;
-  				if (firstIndex == -1) {firstIndex = index; continue;}
-  				if (firstIndex > index) {firstIndex = index;}
-  			}
+    var firstIndex = -1;
+    for (var i in separators) {
+      var index = $string.indexOf(separators[i]);
+      if (index == -1) continue;
+      if (firstIndex == -1) {firstIndex = index; continue;}
+      if (firstIndex > index) {firstIndex = index;}
+    }
 
-  			if (firstIndex !=-1) {
-  					head = $string.slice(0, firstIndex+1);
-  					desc = $string.slice(firstIndex+1);
-  			}
-  			return [head, desc];
-  		};
+    if (firstIndex !=-1) {
+      head = $string.slice(0, firstIndex+1);
+      desc = $string.slice(firstIndex+1);
+    }
+    return [head, desc];
+  };
 
-  	}]);
+}]);

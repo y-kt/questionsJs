@@ -3,8 +3,8 @@
 describe('sorting the list of users', function() {
   it('sorts in descending order by default', function() {
     var users = ['jack', 'igor', 'jeff'];
-//    var sorted = sortUsers(users);
-//    expect(sorted).toEqual(['jeff', 'jack', 'igor']);
+    //    var sorted = sortUsers(users);
+    //    expect(sorted).toEqual(['jeff', 'jack', 'igor']);
   });
 });
 
@@ -18,7 +18,7 @@ describe('TodoCtrl', function() {
   var sce;
   var localStorage;
   var window;
- 
+
   // Injecting variables
   // http://stackoverflow.com/questions/13664144/how-to-unit-test-angularjs-controller-with-location-service
   beforeEach(inject(function($location,
@@ -28,64 +28,64 @@ describe('TodoCtrl', function() {
     $localStorage,
     $sce,
     $window){
-    // The injector unwraps the underscores (_) from around the parameter names when matching
+      // The injector unwraps the underscores (_) from around the parameter names when matching
 
-    scope = $rootScope.$new();
+      scope = $rootScope.$new();
 
-    location = $location;
-    controller = $controller;
-    firebaseArray = $firebaseArray;
-    sce = $sce;
-    localStorage = $localStorage;
-    window = $window;
-  }));
+      location = $location;
+      controller = $controller;
+      firebaseArray = $firebaseArray;
+      sce = $sce;
+      localStorage = $localStorage;
+      window = $window;
+    }));
 
-  describe('TodoCtrl Testing', function() {
-    it('setFirstAndRestSentence', function() {
-      var ctrl = controller('TodoCtrl', {
-        $scope: scope
+    describe('TodoCtrl Testing', function() {
+      it('setFirstAndRestSentence', function() {
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope
+        });
+
+        var testInputs = [
+          {str:"Hello? This is Sung", exp: "Hello?"},
+          {str:"Hello.co? This is Sung", exp: "Hello.co?"},
+          {str:"Hello.co This is Sung", exp: "Hello.co This is Sung"},
+          {str:"Hello.co \nThis is Sung", exp: "Hello.co \n"},
+
+          {str:"Hello?? This is Sung", exp: "Hello??"},
+        ];
+
+        for (var i in testInputs) {
+          var results = scope.getFirstAndRestSentence(testInputs[i].str);
+          expect(results[0]).toEqual(testInputs[i].exp);
+        }
       });
 
-      var testInputs = [
-        {str:"Hello? This is Sung", exp: "Hello?"},
-        {str:"Hello.co? This is Sung", exp: "Hello.co?"},
-        {str:"Hello.co This is Sung", exp: "Hello.co This is Sung"},
-        {str:"Hello.co \nThis is Sung", exp: "Hello.co \n"},
+      it('RoomId', function() {
+        location.path('/new/path');
 
-        {str:"Hello?? This is Sung", exp: "Hello??"},
-      ];
-
-      for (var i in testInputs) {
-        var results = scope.getFirstAndRestSentence(testInputs[i].str);
-        expect(results[0]).toEqual(testInputs[i].exp);
-      }
-    });
-
-    it('RoomId', function() {
-      location.path('/new/path');
-
-      var ctrl = controller('TodoCtrl', {
-        $scope: scope,
-        $location: location
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location
         });
 
-      expect(scope.roomId).toBe("new");
-    });
+        expect(scope.roomId).toBe("new");
+      });
 
-    it('toTop Testing', function() {
+      it('toTop Testing', function() {
 
-      var ctrl = controller('TodoCtrl', {
-        $scope: scope,
-        $location: location,
-        $firebaseArray: firebaseArray,
-        $sce: sce,
-        $localStorage: localStorage,
-        $window: window
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
         });
 
-      scope.toTop();
-      expect(window.scrollX).toBe(0);
-      expect(window.scrollY).toBe(0);
+        scope.toTop();
+        expect(window.scrollX).toBe(0);
+        expect(window.scrollY).toBe(0);
+      });
     });
   });
-});

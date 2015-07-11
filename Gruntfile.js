@@ -26,6 +26,14 @@ grunt.initConfig({
   },
 
 
+uglify: {
+    my_target: {
+      files: {
+        'dist/handsup.min.js': ['js/*.js', 'js/conrollers/*.js', 'js/filters/*.js']
+      }
+    }
+  },
+
     // Test settings
   karma: {
         unit: {
@@ -64,4 +72,8 @@ grunt.loadNpmTasks('grunt-karma');
 
 // npm install grunt-protractor-runner --save-dev
 grunt.loadNpmTasks('grunt-protractor-runner');
+
+// npm install grunt-contrib-uglify --save-dev
+grunt.loadNpmTasks('grunt-contrib-uglify');
+
 };
