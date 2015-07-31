@@ -42,6 +42,7 @@ $scope.todos = $firebaseArray(query);
 //$scope.input.wholeMsg = '';
 $scope.editedTodo = null;
 
+// pre-precessing for collection
 $scope.$watchCollection('todos', function () {
 	var total = 0;
 	var remaining = 0;
@@ -220,7 +221,10 @@ angular.element($window).bind("scroll", function() {
 		$window.innerHeight + "scrollY" +
 		$window.scrollY + "offsetHeight" + $window.document.body.offsetHeight);
 
+		// update the max value
 		$scope.increaseMax();
+
+		// force to update the view (html)
 		$scope.$apply();
 	}
 });

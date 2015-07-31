@@ -3,9 +3,9 @@
 
 /**
 * The questionFilter
-* Show the new questions on the top
+* Show the new questions on the top and show only max questions 
+*
 */
-
 todomvc.filter('questionFilter', function () {
   return function (input, max) {
     var sorted = [];
