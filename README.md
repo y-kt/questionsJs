@@ -3,6 +3,13 @@ questionsJs
 
 Inspired by Firebase & AngularJS TodoMVC Example
 
+#### Configuration
+Please change this firebase URL to your app URL. Otherwise, it won't work.
+
+Change this file: js/controller/todoCtrl.js
+
+var url = "https://classquestion.firebaseio.com/" + roomId + "/questions/";
+
 #### How to install `node` and `npm`
 - [Windows](http://blog.teamtreehouse.com/install-node-js-npm-windows)
 - [Mac](http://blog.teamtreehouse.com/install-node-js-npm-mac)
