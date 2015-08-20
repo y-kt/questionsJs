@@ -6,7 +6,7 @@ Inspired by Firebase & AngularJS TodoMVC Example
 #### Configuration
 Please change this firebase URL to your app URL. Otherwise, it won't work.
 
-Change this file: js/controller/todoCtrl.js
+Change this file: /js/controllers/todoCtrl.js
 
 var url = "https://classquestion.firebaseio.com/" + roomId + "/questions/";
 
