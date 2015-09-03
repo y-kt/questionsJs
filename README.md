@@ -18,9 +18,10 @@ var url = "https://classquestion.firebaseio.com/" + roomId + "/questions/";
 Local webserver
 ----
 
-yeoman server
 ```
-$ npm install -g yo
+$ cd questionsJS (working directory)
+$ sudo npm install -g karma
+$ npm start
 ```
 
 Unit Testing with [Karma](http://karma-runner.github.io/0.13/index.html)
@@ -28,7 +29,7 @@ Unit Testing with [Karma](http://karma-runner.github.io/0.13/index.html)
 
 #### Installation
 ```
-$ npm install -g karma karma-cli karma-coverage karma-chrome-launcher karma-jasmine
+$ sudo npm install -g karma karma-cli karma-coverage karma-chrome-launcher karma-jasmine
 ```
 
 Test case: `test/unit/*`
@@ -41,7 +42,7 @@ End-to-End Testing with [Protractor](http://www.protractortest.org/#/)
 
 #### Installation
 ````
-npm install -g protractor
+sudo npm install -g protractor
 webdriver-manager update & webdriver-manager start
 ````
 
